@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  qa_seq_api:
+    build: .
+    ports:
+      - "8000:8000"
+    network_mode: bridge
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    environment:
+      - SERVER_NAME=0.0.0.0
+    restart: always
+    network_mode: host
