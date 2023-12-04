@@ -362,22 +362,7 @@ print(f"Device: {device}")
 random.seed(SEED)
 np.random.seed(SEED)
 
-# Define fields
-tokenize = lambda x: x.split()
-TEXT = Field(tokenize=tokenize, lower=False, include_lengths = True, init_token = '<SOS>', eos_token = '<EOS>')
-LEX = Field(tokenize=tokenize, lower=False, init_token = '<SOS>', eos_token = '<SOS>')
-BIO = Field(tokenize=tokenize, lower=False, init_token = '<SOS>', eos_token = '<SOS>')
-
 # Load data
-fields = [('context', TEXT), ('question', TEXT), ('BIO', BIO), ('LEX', LEX)]
-
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-# Load data
-trainloc = os.path.join(DIR, 'results/resultssquad_train.csv')
-valloc = os.path.join(DIR, 'dataset/validation_set.csv')
-testloc = os.path.join(DIR, 'dataset/test_set.csv')
 resume = os.path.join('dataset/model_14.pth')
 
 # Create Field object
@@ -389,24 +374,25 @@ BIO = Field(tokenize=tokenize, lower=False, init_token = '<SOS>', eos_token = '<
 # Specify Fields in the dataset
 fields = [('context', TEXT), ('question', TEXT), ('bio', BIO), ('lex', LEX)]
 
-# Build the dataset
-train_data, valid_data, test_data = TabularDataset.splits(path = '',train=trainloc, validation=valloc,
-                                 test=testloc, fields = fields, format='csv', skip_header=True)
-
 # Build vocabulary
 MAX_VOCAB_SIZE = 35000
 MIN_COUNT = 5
 
-TEXT.build_vocab(train_data, max_size=MAX_VOCAB_SIZE,
-                min_freq=MIN_COUNT, vectors='glove.6B.300d',
-                unk_init=torch.Tensor.normal_)
-BIO.build_vocab(train_data)
-LEX.build_vocab(train_data)
+vocab_dir = os.path.join(DIR, 'vocabs')
 
-# Building model
-pad_idx = TEXT.vocab.stoi['<pad>']
-eos_idx = TEXT.vocab.stoi['<EOS>']
-sos_idx = TEXT.vocab.stoi['<SOS>']
+# Load the vocabularies
+text_vocab = torch.load(os.path.join(vocab_dir, 'text_vocab.pth'))
+bio_vocab = torch.load(os.path.join(vocab_dir, 'bio_vocab.pth'))
+lex_vocab = torch.load(os.path.join(vocab_dir, 'lex_vocab.pth'))
+
+# Assign the loaded vocabularies to your fields
+TEXT.vocab = text_vocab
+BIO.vocab = bio_vocab
+LEX.vocab = lex_vocab
+
+pad_idx = 1
+eos_idx = 3
+sos_idx = 2
 
 # Size of embedding_dim should match the dim of pre-trained word embeddings
 embedding_dim = 300
