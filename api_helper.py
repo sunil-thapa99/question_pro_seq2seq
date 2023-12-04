@@ -363,7 +363,7 @@ random.seed(SEED)
 np.random.seed(SEED)
 
 # Load data
-resume = os.path.join('dataset/model_14.pth')
+resume = os.path.join('models/model_14.pth')
 
 # Create Field object
 tokenize = lambda x: x.split()

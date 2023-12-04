@@ -1,25 +1,20 @@
-FROM ubuntu:22.04
+FROM python:3.9.6
 MAINTAINER sunil43thapa@gmail.com
-
-RUN apt-get update -y
-
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get install -y python3.6
-
-
-RUN apt-get install python3-pip -y
-RUN apt-get install gunicorn3 -y
-
-
-COPY requirements.txt requirements.txt
-COPY . /opt/
-
-
-RUN pip3 install -r requirements.txt
-RUN python3 -m spacy download en_core_web_md
 
 WORKDIR /opt/
 
+COPY api.py /opt/
+COPY api_helper.py /opt/
+COPY vocabs /opt/vocabs
+COPY models /opt/models
+COPY requirements.txt requirements.txt
 
-CMD ["gunicorn3", "-b", "127.0.0.1:5005", "api:app"]
+RUN apt-get update -y &&\
+    python -m venv ./venv &&\
+    chmod -R 755 . &&\
+    apt-get install python3-pip -y && \
+    ./venv/bin/activate &&\
+    ./venv/bin/pip install -r requirements.txt &&\
+    ./venv/bin/python -m spacy download en_core_web_md
+
+CMD ./venv/bin/gunicorn -b 0.0.0.0:8000 api:app --timeout 120

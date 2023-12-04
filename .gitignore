@@ -144,3 +144,4 @@ cython_debug/
 .vector_cache/*
 .data/*
 *.csv
+*/.DS_Store
