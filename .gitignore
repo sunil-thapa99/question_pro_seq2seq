@@ -140,7 +140,7 @@ dmypy.json
 cython_debug/
 
 
-*.pth
+models/*
 .vector_cache/*
 .data/*
 *.csv
