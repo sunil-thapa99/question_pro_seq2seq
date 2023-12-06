@@ -1,6 +1,8 @@
 FROM python:3.9.6
 MAINTAINER sunil43thapa@gmail.com
 
+ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
+
 WORKDIR /opt/
 
 COPY api.py /opt/
