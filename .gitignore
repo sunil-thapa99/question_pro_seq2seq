@@ -1,4 +1,3 @@
-# Template file from "https://github.com/github/gitignore/blob/master/Python.gitignore"
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -96,7 +95,6 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
 # Celery stuff
