@@ -9,7 +9,12 @@ app = Flask(__name__)
 def seq_question():
     context = request.form['context']
     answer = request.form['answer']
-    answer_start = request.form['answer_start']
+    index = context.find(answer)
+    if index != -1:
+        answer_start = index
+    else:
+        answer_start = 0
+    # answer_start = request.form['answer_start']
     # context = data['context']
     # answer = data['answer']
     # answer_start = data['answer_start']
