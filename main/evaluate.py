@@ -59,7 +59,7 @@ train_data, valid_data, test_data = data.TabularDataset.splits(path = '',train=t
                                  test=testloc, fields = fields, format='csv', skip_header=True)
 
 # Build vocabulary
-MAX_VOCAB_SIZE = 50000
+MAX_VOCAB_SIZE = 35000
 MIN_COUNT = 5
 BATCH_SIZE = args.batch_size
 
