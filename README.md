@@ -44,6 +44,28 @@ The Seq2Seq model is trained using pairs of input and target sequences. The trai
 
 This model architecture provides a robust framework for sequence-to-sequence tasks, offering flexibility and effectiveness in various natural language processing applications.
 
+## How to Run the project
+
+### Download SQuAD dataset
+```shell
+  python main.py --directory [DIRECTORY]
+```
+
+### Squad Parse
+```shell
+python squad_parse.py --train_filepath [PATH TO TRAIN JSON] --dev_filepath [PATH TO DEV JSON] --save [DIRECTORY TO STORE RESULT]
+```
+
+### Train
+```shell
+python train.py --train-set [PATH TO THE PREPROCESSED TRAIN CSV] --dev-set [PATH TO THE PREPROCESSED DEV CSV] --epochs 100  --save [DIRECTORY TO STORE RESULT] --batch-size 128 --save [DIRECTORY TO STORE RESULT]
+```
+Or
+Run train_test.ipynb
+
+### Evaluate
+Run evaluate_model.ipynb
+
 ## API test
 
 ```
