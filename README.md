@@ -48,7 +48,7 @@ This model architecture provides a robust framework for sequence-to-sequence tas
 
 ### Download SQuAD dataset
 ```shell
-  python main.py --directory [DIRECTORY]
+python main.py --directory [DIRECTORY]
 ```
 
 ### Squad Parse
